@@ -1,34 +1,57 @@
-import React, {useState} from 'react';
-import {PageLayout, Input, PasswordInput} from 'components/common';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { PageLayout, Input, PasswordInput, Button } from "components/common";
+import styled from "styled-components";
 
 const Form = styled.form`
-width: 100%;
-max-width: 400px;
-background: white;
-border: 1px solid #eee;
-padding: 16px;
-box-sizing: border-box;
-color: black;
-border-radius: 4px;
-`
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border: 1px solid #eee;
+  padding: 16px;
+  box-sizing: border-box;
+  color: black;
+  border-radius: 4px;
+
+  .alt-text {
+    text-align: center;
+    margin: 10px 0;
+  }
+`;
+
+let timeout;
 
 export default function Login() {
+  const [formFields, setFormFields] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const [formFields, setFormFields ] = useState({username: '', password: ''});
-  
-  function handInputChange(e){
+  function handInputChange(e) {
     e.persist();
-    setFormFields(s => ({
+    setFormFields((s) => ({
       ...s,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   }
-  
+
+  function handleSubmit(e) {
+    e.preventDefault(0);
+    setLoading(true);
+    timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }
+
+  useEffect(()=> {
+    return () => {
+      if(timeout){
+        clearTimeout(timeout);
+      }
+    }
+  }, [])
+
   return (
     <PageLayout>
       <h1>Login</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Input
           value={formFields.username}
           name="username"
@@ -39,10 +62,19 @@ export default function Login() {
         <PasswordInput
           value={formFields.password}
           name="password"
-          
           onChange={handInputChange}
-          
         ></PasswordInput>
+        <Button type="submit" large disabled={loading}>
+          {loading ? 'Loading...' : 'Login'}
+        </Button>
+        {!loading &&
+        <>
+        <div className="alt-text">or</div>
+        <Button secondary type="button">
+          Register
+        </Button>
+        </>
+        }
       </Form>
     </PageLayout>
   );

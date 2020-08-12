@@ -16,7 +16,7 @@ const HeaderWrapper = styled.header`
 `;
 
 const Menu = styled.nav`
-  display: ${p => p.open ? 'block': 'none' };
+  display: ${p => p.open ? 'black': 'none' };
   font-family: "Open Sans";
   position: absolute;
   width: 100%;
@@ -25,7 +25,7 @@ const Menu = styled.nav`
   padding: 8px;
   box-sizing: border-box;
   border-bottom: 3px solid ${p => p.theme.secondaryColor};
-  background: white;
+  background: ${p => p.theme.bodyBackgroundColor};
 
   @media (min-width: 768px) {
     display: flex;
@@ -55,7 +55,7 @@ const StyledLink = styled(Link)`
   box-sizing: border-box;
   margin: auto 0;
   font-weight: ${(p) => (p.isActive ? "bold" : "normal")};
-  color: black;
+  color: ${p => p.theme.bodyFontColor};
 `;
 
 const MobileMenuIcon = styled.div`
@@ -66,7 +66,7 @@ padding: 5px;
 
 >div{
 height: 3px;
-background: black;
+background: ${p => p.theme.bodyFontColor};
 margin 5px 0;
 width: 100%;
 }

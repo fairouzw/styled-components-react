@@ -77,7 +77,7 @@ export default function Login() {
         ></PasswordInput>
         </>
       }
-        <Button type="submit" large disabled={loading}>
+        <Button large="test" type="submit" large disabled={loading}>
           {loading ? 'Loading...' : 'Login'}
         </Button>
         {!loading &&
